@@ -1,4 +1,5 @@
 import Table from "../Components/Table";
+import SortableTable from "../Components/SortableTable";
 
 function TablePage() {
   const data = [
@@ -12,6 +13,7 @@ function TablePage() {
     {
       label: "Fruits",
       render: (fruit) => fruit.name,
+      sortValue: (fruit) => fruit.name,
     },
     {
       label: "Color",
@@ -20,10 +22,19 @@ function TablePage() {
     {
       label: "Score",
       render: (fruit) => fruit.score,
-      header: () => <th className="bg-red-500">Score</th>,
+      sortValue: (fruit) => fruit.score,
+    },
+    {
+      label: "Name length",
+      render: (fruit) => fruit.name.length,
     },
   ];
-  return <Table data={data} config={config} />;
+  return (
+    <div className="flex flex-col gap-10">
+      <Table data={data} config={config} />
+      <SortableTable data={data} config={config} />
+    </div>
+  );
 }
 
 export default TablePage;

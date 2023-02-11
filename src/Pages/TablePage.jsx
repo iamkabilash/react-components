@@ -25,13 +25,15 @@ function TablePage() {
       sortValue: (fruit) => fruit.score,
     },
     {
-      label: "Name length",
-      render: (fruit) => fruit.name.length,
+      label: "Score Squared",
+      render: (fruit) => fruit.score ** 2,
     },
   ];
   return (
     <div className="flex flex-col gap-10">
+      <h2 className="text-white text-xl font-bold">Table</h2>
       <Table data={data} config={config} />
+      <h2 className="text-white text-xl font-bold">Sortable table</h2>
       <SortableTable data={data} config={config} />
     </div>
   );

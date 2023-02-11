@@ -5,14 +5,18 @@ function Table({ data, config }) {
     if (column.header) {
       return <Fragment key={column.label}>{column.header()}</Fragment>;
     } else {
-      return <th key={column.label}>{column.label}</th>;
+      return (
+        <th key={column.label} className="px-5">
+          {column.label}
+        </th>
+      );
     }
   });
 
   const renderedRows = data.map((rowData) => {
     const renderedCells = config.map((column) => {
       return (
-        <td className="p-3" key={column.label}>
+        <td className="p-3 text-center" key={column.label}>
           {column.render(rowData)}
         </td>
       );

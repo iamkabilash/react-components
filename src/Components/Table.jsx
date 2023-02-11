@@ -1,12 +1,25 @@
-function Table({ data }) {
-  const renderedRows = data.map((fruit) => {
-    return (
-      <tr key={fruit.name} className="border-b">
-        <td className="p-3">{fruit.name}</td>
-        <td className="p-3">
-          <div className={`p-3 m-2 ${fruit.color}`}></div>
+import { Fragment } from "react";
+
+function Table({ data, config }) {
+  const renderedHeaders = config.map((column) => {
+    if (column.header) {
+      return <Fragment key={column.label}>{column.header()}</Fragment>;
+    } else {
+      return <th key={column.label}>{column.label}</th>;
+    }
+  });
+
+  const renderedRows = data.map((rowData) => {
+    const renderedCells = config.map((column) => {
+      return (
+        <td className="p-3" key={column.label}>
+          {column.render(rowData)}
         </td>
-        <td className="p-3">{fruit.score}</td>
+      );
+    });
+    return (
+      <tr key={rowData.name} className="border-b">
+        {renderedCells}
       </tr>
     );
   });
@@ -15,11 +28,7 @@ function Table({ data }) {
     <div className="text-white">
       <table className="table-auto border-spacing-2">
         <thead>
-          <tr className="border-b-2">
-            <th>Fruit</th>
-            <th>Color</th>
-            <th>Score</th>
-          </tr>
+          <tr className="border-b-2">{renderedHeaders}</tr>
         </thead>
         <tbody>{renderedRows}</tbody>
       </table>
